@@ -1,0 +1,16 @@
+#app_bar{
+    background-color: red;
+    border-radius: 10px;
+    margin: auto;
+}
+
+#tabuleiro{
+    background-color: blue;
+    border-radius: 10px;
+    margin: auto;
+    display: grid;
+}
+
+body{
+    margin: 0;
+}
