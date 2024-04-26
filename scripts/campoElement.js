@@ -5,13 +5,13 @@ const tabuleiro = document.getElementById('tabuleiro')
 
 //Cria os botões em uma grid
 export function gerarCampos(qtdColunas) {
-    for (let i = 0; i < qtdColunas; i++) {
-        for (let j = 0; j < qtdLinhas(qtdColunas); j++) {
+    for (let i = 0; i < qtdLinhas(qtdColunas); i++) {
+        for (let j = 0; j < qtdColunas; j++) {
             const button = document.createElement('button')
             button.className = 'botao'
-            button.id = `${i + 1}-${j + 1}`
+            button.id = `${j + 1}-${i + 1}`
             tabuleiro.appendChild(button)
-            gerarCamposLogico(i + 1, j + 1, false, false, false)
+            gerarCamposLogico(j + 1, i + 1, false, false, false)
         }
     }
     styleButton(qtdColunas)

@@ -15,7 +15,11 @@ export function gerarCamposLogico(posicaoX, posicaoY, temBomba, estaMarcado, est
 
 //Procura o campo referente a posição X e Y
 function acharCampo(posicaoX, posicaoY){
-    return listaCamposLogicos.find(campo => campo.posicaoX === posicaoX && campo.posicaoY === posicaoY);
+    try {
+        return listaCamposLogicos.find(campo => campo.posicaoX === posicaoX && campo.posicaoY === posicaoY);
+    } catch {
+        return null
+    }
 }
 
 //Marca a variável estaAberto 
@@ -34,4 +38,15 @@ export function marcarCampo(posicaoX, posicaoY){
 
 export function marcarBomba(posicaoX, posicaoY){
     acharCampo(posicaoX, posicaoY).temBomba = true
+}
+
+export function vizinhosCampo(posicaoX, posicaoY){
+    const campoPrincipal = acharCampo(posicaoX, posicaoY)
+
+    let vizinhos = [
+        [acharCampo(posicaoX-1, posicaoY-1), acharCampo(posicaoX, posicaoY-1), acharCampo(posicaoX+1, posicaoY-1)],
+        [acharCampo(posicaoX-1, posicaoY), acharCampo(posicaoX+1, posicaoY)],
+        [acharCampo(posicaoX-1, posicaoY+1), acharCampo(posicaoX, posicaoY+1), acharCampo(posicaoX+1, posicaoY+1)]
+    ]
+    return vizinhos
 }
