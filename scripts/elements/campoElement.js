@@ -1,4 +1,5 @@
-import { gerarCamposLogico, listaCamposLogicos } from "./campoLogico.js"
+import { gerarCamposLogico, listaCamposLogicos } from "/scripts/class/campoLogico.js"
+import { campoClick, onRightClick } from "../gameController/gameEvents.js"
 import { getAlturaTabuleiro, getLarguraTabuleiro } from "./size.js"
 
 const tabuleiro = document.getElementById('tabuleiro') 
@@ -10,6 +11,8 @@ export function gerarCampos(qtdColunas) {
             const button = document.createElement('button')
             button.className = 'botao'
             button.id = `${j + 1}-${i + 1}`
+            button.onclick = () => campoClick(j + 1, i + 1);
+            button.oncontextmenu = () => onRightClick(j + 1, i + 1)
             tabuleiro.appendChild(button)
             gerarCamposLogico(j + 1, i + 1, false, false, false)
         }
@@ -39,3 +42,4 @@ function styleButton(qtdColunas) {
         botao.style.height = larguraButton(qtdColunas) + "px"
     })
 }
+
