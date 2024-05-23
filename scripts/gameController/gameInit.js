@@ -7,8 +7,9 @@ import { atualizarVizinhosBomba, gerarBombas } from "../class/tabuleiro.js"
 ajusteDimensoesElementos()
 gerarCampos(50)
 createRestartButton()
-gerarBombas(0.2)
+gerarBombas(0)
 atualizarVizinhosBomba(listaCamposLogicos)
+console.log(listaCamposLogicos)
 
 const qtdBombas = listaCamposLogicos.filter(campo => {
     return campo.temBomba === true

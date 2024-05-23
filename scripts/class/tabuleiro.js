@@ -1,5 +1,5 @@
 import { gerarCampos } from "/scripts/elements/campoElement.js"
-import { abrirCampo, listaCamposLogicos, marcarBomba, resetListaCamposLogicos, vizinhosCampo } from "./campoLogico.js"
+import { listaCamposLogicos, marcarBomba, resetListaCamposLogicos, vizinhosCampo } from "./campoLogico.js"
 import { gameWin } from "../elements/result.js"
 
 export function gerarBombas(porcentagemBombas) {
@@ -10,18 +10,6 @@ export function gerarBombas(porcentagemBombas) {
         }
     })
 }
-
-//Função que abre os campos adjacentes que não possuem bombas nem vizinhos com bombas
-/*export function aberturaSequencial(campo) {
-    campo.vizinho.flatMap(vizinhosVetor => vizinhosVetor).forEach(campoVizinho => {
-            let vizinhosValidos = campoVizinho.vizinho.filter(vizinhoDoVizinho => vizinhoDoVizinho !== undefined);
-            let cont = vizinhosValidos.filter(vizinhoDoVizinho => !vizinhoDoVizinho.temBomba).length;
-            if (cont === vizinhosValidos.length) {
-                abrirCampo(campoVizinho);
-                aberturaSequencial(campoVizinho);
-            }
-    });
-}*/
 
 //Relaciona os vizinhos com os campos, e faz a contagem de bombas
 export function atualizarVizinhosBomba(listaCamposLogicos) {

@@ -5,7 +5,7 @@ import { checkWin } from "./tabuleiro.js";
 //Lista que será adicionado os objetos Campo
 export let listaCamposLogicos = []
 
-export function resetListaCamposLogicos(){
+export function resetListaCamposLogicos() {
     listaCamposLogicos = []
 }
 
@@ -31,25 +31,59 @@ export function acharCampo(posicaoX, posicaoY) {
 }
 
 //Marca a variável estaAberto 
-export function abrirCampo(posicaoX, posicaoY) {
+/*export function abrirCampo(posicaoX, posicaoY) {
     const campo = acharCampo(posicaoX, posicaoY)
-    if (!campo.estaMarcado) {
-        if (!campo.temBomba) {
-            campo.estaAberto = true
-            campoAberto(campo)
-            if(campo.vizinhosCampo === 0){
-                campo.vizinho.flatMap(vetorUnico => vetorUnico).forEach(vizinho => {
-                    abrirCampo(vizinho.posicaoX, vizinho.posicaoY)
-                });
+    if (!campo.estaMarcado) { //Verifica se esta marcado: Se esta não faz nada, se não estiver continua a abertura
+        if (!campo.temBomba) { //Verifica se o campo está minado, se estiver é game over, se não estiver, continua a abertura
+            campo.estaAberto = true //Abre logicamente o campo
+            campoAberto(campo) //Abre visualmente o campo
+            if (campo.vizinhosBomba === 0) { //Verifica se o número de vizinhos com bomba é zero
+                campo.vizinho.flatMap(vetorSecundario =>
+                    vetorSecundario.flatMap(vizinhos => {
+                        if (vizinhos !== undefined) {
+                            abrirCampo(vizinhos.posicaoX, vizinhos.posicaoY)
+                        }
+                    }
+                    )
+                )
             }
-            //aberturaSequencial(campo)
             checkWin()
         } else {
             gameOver()
         }
     }
-}
+}*/
 
+export function abrirCampo(posicaoX, posicaoY) {
+    const campoInicial = acharCampo(posicaoX, posicaoY);
+    const fila = [campoInicial];
+
+    while (fila.length > 0) {
+        const campo = fila.shift(); // Remove o primeiro campo da fila
+
+        if (!campo.estaMarcado && !campo.estaAberto) { //Verifica se o campo não está marcado e aberto
+            if (!campo.temBomba) {
+                campo.estaAberto = true; // Abre logicamente o campo
+                campoAberto(campo); // Abre visualmente o campo
+
+                if (campo.vizinhosBomba === 0) {
+                    // Adiciona todos os vizinhos à fila
+                    campo.vizinho.flatMap(vetorSecundario =>
+                        vetorSecundario.forEach(vizinho => {
+                            if (vizinho !== undefined && !vizinho.estaAberto) {
+                                fila.push(vizinho);
+                            }
+                        })
+                    );
+                }
+                checkWin();
+            } else {
+                gameOver();
+                return;
+            }
+        }
+    }
+}
 
 export function marcarCampo(posicaoX, posicaoY) {
     const campo = acharCampo(posicaoX, posicaoY)
