@@ -2,10 +2,9 @@ import { gerarCamposLogico, listaCamposLogicos } from "/scripts/class/campoLogic
 import { campoClick, onRightClick } from "../gameController/gameEvents.js"
 import { getAlturaTabuleiro, getLarguraTabuleiro } from "./size.js"
 
-const tabuleiro = document.getElementById('tabuleiro') 
-
 //Cria os botões em uma grid
 export function gerarCampos(qtdColunas) {
+    const tabuleiro = document.getElementById('tabuleiro') 
     for (let i = 0; i < qtdLinhas(qtdColunas); i++) {
         for (let j = 0; j < qtdColunas; j++) {
             const button = document.createElement('button')

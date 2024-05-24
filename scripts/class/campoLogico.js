@@ -30,30 +30,6 @@ export function acharCampo(posicaoX, posicaoY) {
     }
 }
 
-//Marca a variável estaAberto 
-/*export function abrirCampo(posicaoX, posicaoY) {
-    const campo = acharCampo(posicaoX, posicaoY)
-    if (!campo.estaMarcado) { //Verifica se esta marcado: Se esta não faz nada, se não estiver continua a abertura
-        if (!campo.temBomba) { //Verifica se o campo está minado, se estiver é game over, se não estiver, continua a abertura
-            campo.estaAberto = true //Abre logicamente o campo
-            campoAberto(campo) //Abre visualmente o campo
-            if (campo.vizinhosBomba === 0) { //Verifica se o número de vizinhos com bomba é zero
-                campo.vizinho.flatMap(vetorSecundario =>
-                    vetorSecundario.flatMap(vizinhos => {
-                        if (vizinhos !== undefined) {
-                            abrirCampo(vizinhos.posicaoX, vizinhos.posicaoY)
-                        }
-                    }
-                    )
-                )
-            }
-            checkWin()
-        } else {
-            gameOver()
-        }
-    }
-}*/
-
 export function abrirCampo(posicaoX, posicaoY) {
     const campoInicial = acharCampo(posicaoX, posicaoY);
     const fila = [campoInicial];
