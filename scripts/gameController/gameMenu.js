@@ -12,7 +12,7 @@ buttonStart.innerText = 'Iniciar Jogo'
 buttonStart.onclick = () => iniciarGame()
 
 
-
+//Cria e configura as radios para selecionar a dificuldade
 const divRadio = document.createElement('div')
 divRadio.id = "div-radio"
 
@@ -28,20 +28,16 @@ const label4 = document.createElement('label')
 radio1.type = 'radio'
 radio1.name = 'dificuldade'
 radio1.value = '1'
-radio1.className = 'radio'
 radio2.type = 'radio'
 radio2.name = 'dificuldade'
 radio2.value = '2'
-radio2.className = 'radio'
 radio2.checked = true
 radio3.type = 'radio'
 radio3.name = 'dificuldade'
 radio3.value = '3'
-radio3.className = 'radio'
 radio4.type = 'radio'
 radio4.name = 'dificuldade'
 radio4.value = '4'
-radio4.className = 'radio'
 
 label1.innerText = "Pequeno"
 label2.innerText = "Médio"
@@ -57,17 +53,23 @@ divRadio.append(label1, label2, label3, label4)
 
 
 
+//Importa os elementos na tela
 divOpcoes.append(buttonStart, divRadio)
 body.appendChild(divOpcoes)
 
 
 
+//Dificuldade escolhida, exportada para resetar dentro de game com as mesmas configurações
+export let dificuldadeEscolhida = ''
+
+//Função chamada ao clicar no botão "Iniciar Jogo"
 function iniciarGame(){
-    const dificuldade = opcaoRadio()
-    body.innerHTML = ''
-    initGame(dificuldade.qtdColunas, dificuldade.porcBombas)
+    dificuldadeEscolhida = opcaoRadio() //Obtém a quantidade de colunas e porcentagem de bombas, através do input radio
+    body.innerHTML = '' //Limpa a tela de menu
+    initGame(dificuldadeEscolhida.qtdColunas, dificuldadeEscolhida.porcBombas) //Gera o jogo
 }
 
+//Retorna a opção de dificuldade, a partir da radio selecionada no menu
 function opcaoRadio(){
     return dificuldade(parseInt(document.querySelector('input[name="dificuldade"]:checked').value))
 }

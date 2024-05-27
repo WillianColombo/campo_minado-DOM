@@ -18,6 +18,7 @@ export function gerarCamposLogico(posicaoX, posicaoY, temBomba, estaMarcado, est
         estaMarcado: estaMarcado,
         estaAberto: estaAberto
     }
+    
     listaCamposLogicos.push(campoLogico)
 }
 
