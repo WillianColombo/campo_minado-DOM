@@ -1,32 +1,26 @@
 import { listaCamposLogicos, marcarBomba, vizinhosCampo } from "./campoLogico.js"
 import { gameWin } from "../elements/result.js"
+import { campoAberto } from "../elements/ctrlElements.js"
 
-/*export function gerarBombas(porcentagemBombas) {
-    listaCamposLogicos.forEach(campo => {
-        const random = Math.floor(Math.random() * (100 - 0 + 1)) + 0
-        if (random < porcentagemBombas * 100) {
-            marcarBomba(campo.posicaoX, campo.posicaoY)
-        }
-    })
-}*/
-
+//Gera as bombas em campos aleatórios até que atinja o número esperado
 export function gerarBombas(porcentagemBombas) {
     const tamanhoTabuleiro = listaCamposLogicos.length
     const qtdBombas = parseInt(tamanhoTabuleiro * porcentagemBombas)
 
     let contBombas = 0
 
-    while(contBombas < qtdBombas){
+    while (contBombas < qtdBombas) {
         const posicaoLista = Math.floor(Math.random() * ((tamanhoTabuleiro - 1) - 0 + 1)) + 0
         const campo = listaCamposLogicos[posicaoLista]
-        if(!campo.estaAberto){
+        if (!campo.estaAberto) {
             marcarBomba(campo.posicaoX, campo.posicaoY)
             contBombas++
         }
     }
 }
 
-export function adicionarVizinhos(){
+//Função que adiciona os campos adjacentes dentro da propriedade "vizinho"
+export function adicionarVizinhos() {
     listaCamposLogicos.forEach(campo => campo.vizinho = vizinhosCampo(campo.posicaoX, campo.posicaoY))
 }
 
@@ -44,14 +38,24 @@ export function atualizarVizinhosBomba(listaCamposLogicos) {
     });
 }
 
+//Reseta visualmente os campos
 export function resetCamposElementos() {
     const tabuleiro = document.getElementById("tabuleiro")
     tabuleiro.innerHTML = ''
 }
 
+//Função que confere se o jogo foi vencido
 export function checkWin() {
     const teste = listaCamposLogicos.find(campo => !campo.temBomba && !campo.estaAberto)
     if (teste === undefined) {
         gameWin()
     }
+}
+
+//Função que deixa visivel todos os campos em caso de derrota, incluindo campos com ou sem bombas
+export function abrirGameOver() {
+    listaCamposLogicos.forEach(campo => {
+        campo.estaAberto = true
+        campoAberto(campo);
+    })
 }

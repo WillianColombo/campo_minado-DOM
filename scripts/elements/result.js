@@ -1,3 +1,4 @@
+import { abrirGameOver } from "../class/tabuleiro.js"
 import { restartGame } from "../gameController/gameEvents.js"
 
 export function createFloatDiv(conteudo){
@@ -44,6 +45,7 @@ export function gameWin() {
 }
 
 export function gameOver() {
+    abrirGameOver()
     const defeat = {
         title: "GameOver, tente novamente!",
         button: "Tentar Novamente"
