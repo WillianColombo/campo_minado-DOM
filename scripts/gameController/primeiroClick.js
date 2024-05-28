@@ -17,8 +17,10 @@ export function primeiroClick(posicaoX, posicaoY) {
     //Abre os campos iniciais
     while (camposIniciaisParaAbrir.length > 0) {
         const campo = camposIniciaisParaAbrir.shift()
+        campo.vizinhosBomba = 0
         campo.estaAberto = true;
         campoAberto(campo);
+        
     }
 
     gerarBombas(dificuldadeEscolhida.porcBombas) //Gera as bombas no tabuleiro após a abertura inicial

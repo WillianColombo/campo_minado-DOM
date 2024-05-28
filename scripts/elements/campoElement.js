@@ -1,4 +1,4 @@
-import { gerarCamposLogico, listaCamposLogicos } from "/scripts/class/campoLogico.js"
+import { gerarCamposLogico } from "/scripts/class/campoLogico.js"
 import { campoClick, onRightClick } from "../gameController/gameEvents.js"
 import { getAlturaTabuleiro, getLarguraTabuleiro } from "./size.js"
 

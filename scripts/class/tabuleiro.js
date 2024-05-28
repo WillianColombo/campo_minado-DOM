@@ -55,7 +55,8 @@ export function checkWin() {
 //Função que deixa visivel todos os campos em caso de derrota, incluindo campos com ou sem bombas
 export function abrirGameOver() {
     listaCamposLogicos.forEach(campo => {
-        campo.estaAberto = true
-        campoAberto(campo);
+        //campo.estaAberto = true
+        const defeat = true
+        campoAberto(campo, defeat);
     })
 }

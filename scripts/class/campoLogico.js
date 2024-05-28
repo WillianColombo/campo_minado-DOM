@@ -55,6 +55,8 @@ export function abrirCampo(posicaoX, posicaoY) {
                 }
                 checkWin();
             } else {
+                campo.estaAberto = true; // Abre logicamente o campo
+                campoAberto(campo);
                 gameOver();
                 return;
             }
