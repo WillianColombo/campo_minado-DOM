@@ -1,20 +1,19 @@
-import { listaCamposLogicos, marcarBomba, vizinhosCampo } from "./campoLogico.js"
+import { listaCamposLogicos, vizinhosCampo } from "./campoLogico.js"
 import { gameWin } from "../elements/result.js"
 import { campoAberto } from "../elements/ctrlElements.js"
 
 //Gera as bombas em campos aleatórios até que atinja o número esperado
 export function gerarBombas(porcentagemBombas) {
     const tamanhoTabuleiro = listaCamposLogicos.length
-    const qtdBombas = parseInt(tamanhoTabuleiro * porcentagemBombas)
 
-    let contBombas = 0
+    let contBombas = listaCamposLogicos.filter(campos => campos.temBomba).length    
 
-    while (contBombas < qtdBombas) {
-        const posicaoLista = Math.floor(Math.random() * ((tamanhoTabuleiro - 1) - 0 + 1)) + 0
+    while (contBombas < parseInt(tamanhoTabuleiro * porcentagemBombas)) {
+        const posicaoLista = Math.floor(Math.random() * tamanhoTabuleiro)
         const campo = listaCamposLogicos[posicaoLista]
         if (!campo.estaAberto) {
-            marcarBomba(campo.posicaoX, campo.posicaoY)
-            contBombas++
+            campo.temBomba = true
+            contBombas = listaCamposLogicos.filter(campos => campos.temBomba).length
         }
     }
 }

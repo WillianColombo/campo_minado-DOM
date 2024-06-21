@@ -1,4 +1,6 @@
+import { listaCamposLogicos } from "../class/campoLogico.js"
 import { restartGame } from "../gameController/gameEvents.js"
+import { dificuldadeEscolhida } from "../gameController/gameMenu.js"
 
 export function createRestartButton(){
     const appBar = document.getElementById("app_bar")
@@ -8,4 +10,28 @@ export function createRestartButton(){
     restartButtom.onclick = () => restartGame()
     
     appBar.appendChild(restartButtom)
+}
+
+export function createContFlags(){
+    const appBar = document.getElementById("app_bar")
+
+    const contFlags = document.createElement('div')
+    contFlags.id = 'cont-flag'
+    contFlags.innerText = parseInt(listaCamposLogicos.length * dificuldadeEscolhida.porcBombas)
+    
+    appBar.appendChild(contFlags)
+}
+
+export function updateContFlag(x){
+    const contFlags = document.getElementById('cont-flag')
+    if(x === 1){
+        contFlags.innerText-- 
+    } else {
+        contFlags.innerText++
+    }
+}
+
+export function resetContFlag(){
+    const contFlags = document.getElementById("cont-flag")
+    contFlags.innerText = parseInt(listaCamposLogicos.length * dificuldadeEscolhida.porcBombas)
 }

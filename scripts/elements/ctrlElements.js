@@ -1,4 +1,5 @@
 import { imageButton, imageButtonDefeat } from "../styles/campoStyle.js"
+import { updateContFlag } from "./appBarElement.js"
 
 export function campoAberto(campo, defeat = false){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
@@ -12,9 +13,11 @@ export function campoAberto(campo, defeat = false){
 export function campoMarcado(campo){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
     imageButton(campoElement, campo)
+    updateContFlag(1)
 }
 
 export function campoDesmarcado(campo){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
     imageButton(campoElement, campo)
+    updateContFlag(2)
 }

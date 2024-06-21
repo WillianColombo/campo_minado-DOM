@@ -1,0 +1,57 @@
+#div-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/ia/background.jpg');
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+
+    font-family: "Ubuntu", sans-serif;
+}
+
+#div-opcoes{
+    background-color: rgb(250, 235, 215, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 4px rgb(174, 153, 126);
+    border-radius: 15px;
+}
+
+#div-dificuldade{
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    border: solid 2px rgb(227, 171, 97);
+    border-radius: 5px;
+    font-size: 17px;
+}
+
+button{
+    cursor: pointer;
+    background-color: burlywood;
+}
+button:disabled{
+    background-color: rgb(250, 235, 215);;
+    cursor: auto;
+}
+
+
+#button-start{
+    background-color: burlywood;
+    border: solid 2px rgb(227, 171, 97);
+    border-radius: 5px;
+    width: 200px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#img-logo{
+    width: 250px;
+}

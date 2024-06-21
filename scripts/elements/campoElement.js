@@ -14,6 +14,7 @@ export function gerarCampos(qtdColunas) {
             button.oncontextmenu = () => onRightClick(j + 1, i + 1)
             tabuleiro.appendChild(button)
             gerarCamposLogico(j + 1, i + 1, false, false, false)
+            
         }
     }
     styleButton(qtdColunas)

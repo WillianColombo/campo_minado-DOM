@@ -75,10 +75,6 @@ export function marcarCampo(posicaoX, posicaoY) {
     }
 }
 
-export function marcarBomba(posicaoX, posicaoY) {
-    acharCampo(posicaoX, posicaoY).temBomba = true
-}
-
 export function vizinhosCampo(posicaoX, posicaoY) {
     let vizinhos = [
         [acharCampo(posicaoX - 1, posicaoY - 1), acharCampo(posicaoX, posicaoY - 1), acharCampo(posicaoX + 1, posicaoY - 1)],
