@@ -1,5 +1,5 @@
 //Verifica o estado do botão e atribui a ele uma imagem
-export function imageButton(campoElement, campo) {
+/*export function imageButton(campoElement, campo) {
     if (campo.estaAberto && !campo.temBomba) {
         if (campo.vizinhosBomba === 0) {
             campoAbertoSemBomba(campoElement)
@@ -14,10 +14,30 @@ export function imageButton(campoElement, campo) {
     } else if (campo.estaAberto && campo.temBomba) {
         campoBomba0(campoElement)
     }
+}*/
+
+export function imageButton(campoElement, campo) {
+    if (campo.estaAberto && !campo.temBomba) {
+        campoElement.style.backgroundImage = `url('/assets/images/aberto_${campo.vizinhosBomba}.png')`;
+    } else if (!campo.estaAberto && campo.estaMarcado) {
+        campoElement.style.backgroundImage = "url('/assets/images/bandeira.png')";
+    } else if (!campo.estaAberto && !campo.estaMarcado) {
+        campoElement.style.backgroundImage = "url('/assets/images/fechado.png')";
+    } else if (campo.estaAberto && campo.temBomba) {
+        campoElement.style.backgroundImage = "url('/assets/images/bomba_0.png')";
+    } 
+}
+
+export function imageButtonDefeat(campoElement, campo){
+    if(!campo.estaAberto && campo.temBomba){
+        campoElement.style.backgroundImage = "url('/assets/images/bomba_1.png')";
+    } else if(!campo.estaAberto && !campo.temBomba) {
+        campoElement.style.backgroundImage = `url('/assets/images/aberto_${campo.vizinhosBomba}.png')`;
+    }
 }
 
 //Função chamada em caso de derrota, abre visualmente todos os campos não abertos
-export function imageButtonDefeat(campoElement, campo) {
+/*export function imageButtonDefeat(campoElement, campo) {
     if (!campo.estaAberto && campo.temBomba) {
         campoBomba1(campoElement)
     } else if (!campo.estaAberto && !campo.temBomba) {
@@ -28,10 +48,10 @@ export function imageButtonDefeat(campoElement, campo) {
             campoAbertoComBomba(campoElement)
         }
     }
-}
+}*/
 
 //Percorre todos os elementos campos e adiciona o estilo inicial
-export function initStyle() {
+/*export function initStyle() {
     const listaCamposElementos = document.querySelectorAll('.botao')
     listaCamposElementos.forEach(campo => campoFechado(campo))
 }
@@ -124,4 +144,4 @@ function borderSizeFechado(campo) {
 
 function borderSizeAberto(campo) {
     return (campo.offsetWidth * 0.02) + "px"
-}
+}*/

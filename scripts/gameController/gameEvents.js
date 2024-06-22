@@ -2,7 +2,7 @@ import { abrirCampo, listaCamposLogicos, marcarCampo, resetListaCamposLogicos } 
 import { adicionarVizinhos, atualizarVizinhosBomba, resetCamposElementos } from "../class/tabuleiro.js"
 import { resetContFlag } from "../elements/appBarElement.js";
 import { gerarCampos } from "../elements/campoElement.js";
-import { initStyle } from "../styles/campoStyle.js";
+//import { initStyle } from "../styles/campoStyle.js";
 import { dificuldadeEscolhida } from "./gameMenu.js"
 import { primeiroClick } from "./primeiroClick.js";
 

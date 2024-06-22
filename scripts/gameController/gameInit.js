@@ -4,13 +4,13 @@ import { ajusteDimensoesElementos } from "/scripts/elements/size.js"
 import { adicionarVizinhos } from "../class/tabuleiro.js"
 import { createDivs } from "../elements/createDivs.js"
 import { createContFlags } from "../elements/appBarElement.js"
-import { initStyle } from "../styles/campoStyle.js"
+//import { initStyle } from "../styles/campoStyle.js"
 
 export function initGame(qtdColunas){
     createDivs()
     ajusteDimensoesElementos()
     gerarCampos(qtdColunas)
-    initStyle()
+    //initStyle()
     adicionarVizinhos()
     createRestartButton()
     createContFlags()

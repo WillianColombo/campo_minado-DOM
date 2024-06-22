@@ -40,6 +40,9 @@ body {
 
 .botao{
     cursor: pointer;
+    border: none;
+    background-size: contain;
+    background-image: url('/assets/images/fechado.png');
 }
 
 .botao:disabled{
