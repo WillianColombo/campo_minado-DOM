@@ -35,7 +35,7 @@ export function restartGame() {
     resetCamposElementos()
     resetPrimeiroClick()
     gerarCampos(dificuldadeEscolhida.qtdColunas)
-    initStyle()
+    //initStyle()
     adicionarVizinhos()
     atualizarVizinhosBomba(listaCamposLogicos)
     resetContFlag()
