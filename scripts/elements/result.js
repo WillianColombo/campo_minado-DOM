@@ -1,4 +1,4 @@
-import { abrirGameOver } from "../class/tabuleiro.js"
+import { abrirGameOver, desabilitarTabuleiro } from "../class/tabuleiro.js"
 import { restartGame } from "../gameController/gameEvents.js"
 
 export function createFloatDiv(conteudo){
@@ -35,21 +35,38 @@ function reiniciarFlutuante(floatDiv, overlay) {
     restartGame()
 }
 
+let win = false
+export function getWin(){
+    return win
+}
+export function resetWin(){
+    win = false
+}
 export function gameWin() {
-    const win = {
+    const winMessage = {
         title: "Parabéns, você venceu o jogo!",
         button: "Jogar Novamente"
     }
-
-    createFloatDiv(win)
+    win = true
+    console.log("Win = " + win)
+    createFloatDiv(winMessage)
 }
 
+let defeat = false
+export function getDefeat(){
+    return defeat
+}
+export function resetDefeat(){
+    defeat = false
+}
 export function gameOver() {
     abrirGameOver()
-    const defeat = {
+    desabilitarTabuleiro()
+    const defeatMessage = {
         title: "GameOver, tente novamente!",
         button: "Tentar Novamente"
     }
-
-    createFloatDiv(defeat)
+    defeat = true
+    console.log("Defeat = " + defeat)
+    createFloatDiv(defeatMessage)
 }

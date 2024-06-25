@@ -43,6 +43,12 @@ export function resetCamposElementos() {
     tabuleiro.innerHTML = ''
 }
 
+//Desabilita o tabuleiro em caso de derrota
+export function desabilitarTabuleiro(){
+    let listaBotoes = document.querySelectorAll('.botao')
+    listaBotoes.disabled = true
+}
+
 //Função que confere se o jogo foi vencido
 export function checkWin() {
     const teste = listaCamposLogicos.find(campo => !campo.temBomba && !campo.estaAberto)
@@ -54,7 +60,6 @@ export function checkWin() {
 //Função que deixa visivel todos os campos em caso de derrota, incluindo campos com ou sem bombas
 export function abrirGameOver() {
     listaCamposLogicos.forEach(campo => {
-        //campo.estaAberto = true
         const defeat = true
         campoAberto(campo, defeat);
     })

@@ -1,8 +1,9 @@
-import { listaCamposAbertos } from "../class/ia.js"
+import { listaCamposAbertos, listaCamposMarcados } from "../class/ia.js"
+import { desabilitarTabuleiro } from "../class/tabuleiro.js"
 import { imageButton, imageButtonDefeat } from "../styles/campoStyle.js"
 import { updateContFlag } from "./appBarElement.js"
 
-export function campoAberto(campo, defeat = false, iniciais = false){
+export function campoAberto(campo, defeat = false){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
     campoElement.disabled = true
     imageButton(campoElement, campo)
@@ -23,6 +24,7 @@ export function campoAberto(campo, defeat = false, iniciais = false){
 export function campoMarcado(campo){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
     imageButton(campoElement, campo)
+    listaCamposMarcados.push(campo)
     updateContFlag(1)
 }
 

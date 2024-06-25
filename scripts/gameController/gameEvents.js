@@ -1,8 +1,9 @@
 import { abrirCampo, listaCamposLogicos, marcarCampo, resetListaCamposLogicos } from "../class/campoLogico.js"
-import { resetListaCamposAbertos } from "../class/ia.js";
+import { resetListasIA } from "../class/ia.js";
 import { adicionarVizinhos, atualizarVizinhosBomba, resetCamposElementos } from "../class/tabuleiro.js"
 import { resetContFlag } from "../elements/appBarElement.js";
 import { gerarCampos } from "../elements/campoElement.js";
+import { resetDefeat, resetWin } from "../elements/result.js";
 import { dificuldadeEscolhida } from "./gameMenu.js"
 import { primeiroClick } from "./primeiroClick.js";
 
@@ -32,9 +33,11 @@ export function onRightClick(posicaoX, posicaoY) {
 
 export function restartGame() {
     resetListaCamposLogicos()
-    resetListaCamposAbertos()
+    resetListasIA()
     resetCamposElementos()
     resetPrimeiroClick()
+    resetWin()
+    resetDefeat()
     gerarCampos(dificuldadeEscolhida.qtdColunas)
     adicionarVizinhos()
     atualizarVizinhosBomba(listaCamposLogicos)

@@ -1,6 +1,5 @@
 import { campoAberto, campoDesmarcado, campoMarcado } from "../elements/ctrlElements.js";
 import { gameOver } from "../elements/result.js";
-import { listaCamposAbertos } from "./ia.js";
 import { checkWin } from "./tabuleiro.js";
 
 //Lista que será adicionado os objetos Campo

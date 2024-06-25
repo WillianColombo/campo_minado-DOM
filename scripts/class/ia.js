@@ -1,21 +1,34 @@
+import { getDefeat, getWin } from "../elements/result.js";
 import { campoClick, onRightClick } from "../gameController/gameEvents.js";
 import { listaCamposLogicos } from "./campoLogico.js";
 
 export let listaCamposAbertos = []
+export let listaCamposMarcados = []
 
-export function resetListaCamposAbertos(){
+export function resetListasIA() {
     listaCamposAbertos = []
+    listaCamposMarcados = []
 }
 
 export async function playIA() {
     aberturaInicial()
 
-    let condicao = true
-    while (condicao){
-        await resolverCampos()
-        condicao = verificaLoop()
-        await sleep()
+    let win = false
+    let defeat = false
+
+    while(!win && !defeat){
+        //Loop que resolve os campos, só para quando não tem nenhum campo que pode ser resolvido com lógica
+        let condicao = true
+        while (condicao) {
+            await resolverCampos()
+            condicao = verificaLoop()
+            await sleep()
+        }
+        calculaMelhorProbabilidade()
+        win = getWin()
+        defeat = getDefeat()
     }
+    console.log("Parou")
 }
 
 function aberturaInicial() {
@@ -33,22 +46,30 @@ async function resolverCampos() {
     //Procura na lista de abertos, campos com bomba para marcar
     //Verifica se o número de campos adjacentes é igual ao número de bombas adjacentes
     listaCamposAbertosNaoZerados.forEach(campo => {
-        let vizinhosFechados = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado)
-        if(campo.vizinhosBomba === vizinhosFechados.length){
+        let vizinhosFechados = campo.vizinho.flatMap(
+            vizinho => vizinho).filter(
+                campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto)
+        let vizinhosMarcados = campo.vizinho.flatMap(
+            vizinho => vizinho).filter(
+                campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado)
+
+        if (campo.vizinhosBomba === vizinhosFechados.length && campo.vizinhosBomba !== vizinhosMarcados.length){
             vizinhosFechados.forEach(vizinho => {
                 //Aqui ele verifica se o campo em questão já não está na lista
                 //Previne que o campo seja marcado e desmarcado
-                const verificacao = camposComBomba.find(campoCertoComBomba => campoCertoComBomba.posicaoX === vizinho.posicaoX && campoCertoComBomba.posicaoY === vizinho.posicaoY)    
-                if(!verificacao){
+                const verificacao = camposComBomba.find(campoCertoComBomba => campoCertoComBomba.posicaoX === vizinho.posicaoX && campoCertoComBomba.posicaoY === vizinho.posicaoY)
+                if (!verificacao) {
                     camposComBomba.push(vizinho)
                 }
             })
         }
     })
-    
+
     //Marca os campos que é certo a presença de bomba
     camposComBomba.forEach(campo => {
-        onRightClick(campo.posicaoX, campo.posicaoY)
+        if (!listaCamposMarcados.includes(campo)) {
+            onRightClick(campo.posicaoX, campo.posicaoY)
+        }
     })
 
     //Procura na lista de abertos, campos seguros para abrir
@@ -57,14 +78,14 @@ async function resolverCampos() {
         let vizinhosFechados = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto)
         let vizinhosMarcados = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado)
 
-        if(campo.vizinhosBomba === vizinhosMarcados.length && vizinhosMarcados.length < vizinhosFechados.length){
+        if (campo.vizinhosBomba === vizinhosMarcados.length && vizinhosMarcados.length < vizinhosFechados.length) {
             vizinhosFechados.forEach(vizinho => {
-                if(!vizinho.estaMarcado){
-                    camposSeguros.push(vizinho)  
+                if (!vizinho.estaMarcado) {
+                    camposSeguros.push(vizinho)
                 }
             })
         }
-            
+
     })
 
     //Abre os campos que são seguros
@@ -73,21 +94,59 @@ async function resolverCampos() {
     })
 }
 
+//Função chamada quando não se pode resolver seguramente os campos
+//Calcula palpite de menor risco com base na probabilidade
+function calculaMelhorProbabilidade(){
+    let listaCamposParaAnalise = listaCamposAbertos.filter(
+        campo => campo.vizinhosBomba > 0 && 
+        campo.vizinhosBomba < campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length &&
+        campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length > campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
+    )
+    let campoMelhor = ''
+    let melhorProbabilidade = 0
+
+    listaCamposParaAnalise.forEach(campo => {
+        let vizinhosFechados = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado).length
+        let vizinhosMarcados = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
+        const qtdBombas = campo.vizinhosBomba
+
+        const probabilidade = (vizinhosFechados / (qtdBombas - vizinhosMarcados))
+
+        if(probabilidade > melhorProbabilidade && probabilidade >= 0 && probabilidade <= 10){
+            melhorProbabilidade = probabilidade
+            campoMelhor = campo
+        }
+    })
+
+    let vizinhosFechadosCampoChute = campoMelhor.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado)
+    const numRandom = gerarNumRandom(vizinhosFechadosCampoChute.length)
+    const campoChute = vizinhosFechadosCampoChute[numRandom]
+    campoClick(campoChute.posicaoX, campoChute.posicaoY)
+}
+
 //Procura na lista de abertos, se há pelo menos um campo campos seguros para abertura
 //Se houver, retorna 1 que significa que o loop rodará novamente
 //Se não houver, retorna 0 que significa que o loop não rodará novamente
 function verificaLoop() {
-    let campo = listaCamposAbertos.find(campo => campo.vizinhosBomba === campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado).length && campo.vizinhosBomba !== 0)
-    if(campo){
+    let campo = listaCamposAbertos.find(campo =>
+        campo.vizinhosBomba === campo.vizinho.flatMap(
+            vizinho => vizinho).filter(
+                campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length 
+                && campo.vizinhosBomba !== 0 
+                && campo.vizinhosBomba !== campo.vizinho.flatMap(
+                    vizinho => vizinho).filter(
+                        campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length)
+    if (campo) {
         return true
     } else return false
 }
 
+//Gera um numero aleatorio para "chutar" uma abertura
 function gerarNumRandom(max) {
     return Math.floor(Math.random() * max)
 }
 
 //Função define um delay para que o código não entre em loop infinito 
 function sleep() {
-    return new Promise(resolve => setTimeout(resolve, 1000));
+    return new Promise(resolve => setTimeout(resolve, 500));
 }
