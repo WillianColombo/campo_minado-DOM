@@ -48,7 +48,6 @@ export function gameWin() {
         button: "Jogar Novamente"
     }
     win = true
-    console.log("Win = " + win)
     createFloatDiv(winMessage)
 }
 
@@ -67,6 +66,5 @@ export function gameOver() {
         button: "Tentar Novamente"
     }
     defeat = true
-    console.log("Defeat = " + defeat)
     createFloatDiv(defeatMessage)
 }

@@ -30,7 +30,7 @@ button2.id = '2'
 button3.id = '3'
 button4.id = '4'
 
-button2.disabled = true
+button1.disabled = true
 
 button1.innerText = 'Pequeno'
 button2.innerText = 'Médio'

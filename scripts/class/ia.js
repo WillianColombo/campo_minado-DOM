@@ -11,24 +11,26 @@ export function resetListasIA() {
 }
 
 export async function playIA() {
-    aberturaInicial()
+    //aberturaInicial()
 
-    let win = false
-    let defeat = false
+    procuraCamposDeRisco()
 
-    while(!win && !defeat){
-        //Loop que resolve os campos, só para quando não tem nenhum campo que pode ser resolvido com lógica
-        let condicao = true
-        while (condicao) {
-            await resolverCampos()
-            condicao = verificaLoop()
-            await sleep()
-        }
-        calculaMelhorProbabilidade()
-        win = getWin()
-        defeat = getDefeat()
-    }
-    console.log("Parou")
+    // let win = false
+    // let defeat = false
+
+    // while(!win && !defeat){
+    //Loop que resolve os campos, só para quando não tem nenhum campo que pode ser resolvido com lógica
+    // let condicao = true
+    // while (condicao) {
+    //     await resolverCampos()
+    //     condicao = verificaLoop()
+    //     await delay()
+    // }
+    //     calculaMelhorProbabilidade()
+    //     win = getWin()
+    //     defeat = getDefeat()
+    // }
+    // console.log("Parou")
 }
 
 function aberturaInicial() {
@@ -53,7 +55,7 @@ async function resolverCampos() {
             vizinho => vizinho).filter(
                 campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado)
 
-        if (campo.vizinhosBomba === vizinhosFechados.length && campo.vizinhosBomba !== vizinhosMarcados.length){
+        if (campo.vizinhosBomba === vizinhosFechados.length && campo.vizinhosBomba !== vizinhosMarcados.length) {
             vizinhosFechados.forEach(vizinho => {
                 //Aqui ele verifica se o campo em questão já não está na lista
                 //Previne que o campo seja marcado e desmarcado
@@ -94,13 +96,56 @@ async function resolverCampos() {
     })
 }
 
+
+//qtdBombas > 0 && (qtdBombas - qtdVizinhosMarcados) === 1 && qtdVizinhosFechadosNaoMarcados === 2
+function procuraCamposDeRisco() {
+    let campoDeRisco = listaCamposAbertos.find(campo =>
+        campo.vizinhosBomba > 0
+        && (campo.vizinhosBomba - campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length) === 1
+        && campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado).length === 2
+    )
+    if (campoDeRisco) {
+        let vizinhosDeRisco = campoDeRisco.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado)
+        let campoAdjacente = listaCamposAbertos.find(campo => {
+            let vizinhoRisco1 = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).find(vizinho =>
+                vizinho.posicaoX === vizinhosDeRisco[0].posicaoX && vizinho.posicaoY === vizinhosDeRisco[0].posicaoY
+            )
+            let vizinhoRisco2 = campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).find(vizinho =>
+                vizinho.posicaoX === vizinhosDeRisco[1].posicaoX && vizinho.posicaoY === vizinhosDeRisco[1].posicaoY
+            )
+            if(vizinhoRisco1 && vizinhoRisco2){
+                if(campo !== campoDeRisco){
+                    return campo
+                }
+            }
+        })
+        console.log("Campo de risco")
+        console.log(campoDeRisco)
+        console.log("Campo adjacente")
+        console.log(campoAdjacente)
+        campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => 
+            campoVizinho !== undefined 
+            && !campoVizinho.estaAberto 
+            && campoVizinho !== vizinhosDeRisco[0] 
+            && campoVizinho !== vizinhosDeRisco[1]).forEach(vizinho => {
+                let vizinhosMarcados = campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
+                if((campoAdjacente.vizinhosBomba - vizinhosMarcados - 1) === 0){
+                    console.log("Campo clicado")
+                    console.log(vizinho)
+                    campoClick(vizinho.posicaoX, vizinho.posicaoY)
+                }
+            })
+            
+    }
+}
+
 //Função chamada quando não se pode resolver seguramente os campos
 //Calcula palpite de menor risco com base na probabilidade
-function calculaMelhorProbabilidade(){
+function calculaMelhorProbabilidade() {
     let listaCamposParaAnalise = listaCamposAbertos.filter(
-        campo => campo.vizinhosBomba > 0 && 
-        campo.vizinhosBomba < campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length &&
-        campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length > campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
+        campo => campo.vizinhosBomba > 0 &&
+            campo.vizinhosBomba < campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length &&
+            campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length > campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
     )
     let campoMelhor = ''
     let melhorProbabilidade = 0
@@ -112,7 +157,7 @@ function calculaMelhorProbabilidade(){
 
         const probabilidade = (vizinhosFechados / (qtdBombas - vizinhosMarcados))
 
-        if(probabilidade > melhorProbabilidade && probabilidade >= 0 && probabilidade <= 10){
+        if (probabilidade > melhorProbabilidade && probabilidade >= 0 && probabilidade <= 10) {
             melhorProbabilidade = probabilidade
             campoMelhor = campo
         }
@@ -121,6 +166,7 @@ function calculaMelhorProbabilidade(){
     let vizinhosFechadosCampoChute = campoMelhor.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado)
     const numRandom = gerarNumRandom(vizinhosFechadosCampoChute.length)
     const campoChute = vizinhosFechadosCampoChute[numRandom]
+    console.log("Chutou")
     campoClick(campoChute.posicaoX, campoChute.posicaoY)
 }
 
@@ -129,13 +175,12 @@ function calculaMelhorProbabilidade(){
 //Se não houver, retorna 0 que significa que o loop não rodará novamente
 function verificaLoop() {
     let campo = listaCamposAbertos.find(campo =>
-        campo.vizinhosBomba === campo.vizinho.flatMap(
-            vizinho => vizinho).filter(
-                campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length 
-                && campo.vizinhosBomba !== 0 
-                && campo.vizinhosBomba !== campo.vizinho.flatMap(
-                    vizinho => vizinho).filter(
-                        campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length)
+        campo.vizinhosBomba > 0
+        && ((campo.vizinhosBomba === campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto).length
+            && campo.vizinhosBomba !== campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length)
+            || (campo.vizinhosBomba === campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length)
+            && 0 < campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && !campoVizinho.estaAberto && !campoVizinho.estaMarcado).length)
+    )
     if (campo) {
         return true
     } else return false
@@ -146,7 +191,7 @@ function gerarNumRandom(max) {
     return Math.floor(Math.random() * max)
 }
 
-//Função define um delay para que o código não entre em loop infinito 
-function sleep() {
-    return new Promise(resolve => setTimeout(resolve, 500));
+//Função define um delay para que o código não entre em loop infinito
+function delay() {
+    return new Promise(resolve => setTimeout(resolve, 200));
 }

@@ -1,21 +1,21 @@
 export function dificuldade(i){
     const pequeno = {
-        qtdColunas: 30,
+        qtdColunas: 20,
         porcBombas: 0.2
     }
     
     const medio = {
-        qtdColunas: 43,
+        qtdColunas: 30,
         porcBombas: 0.25
     }
     
     const grande = {
-        qtdColunas: 56,
+        qtdColunas: 43,
         porcBombas: 0.3
     }
     
     const gigante = {
-        qtdColunas: 70,
+        qtdColunas: 56,
         porcBombas: 0.35
     }
     switch(i){
