@@ -11,26 +11,25 @@ export function resetListasIA() {
 }
 
 export async function playIA() {
-    //aberturaInicial()
+    aberturaInicial()
 
-    procuraCamposDeRisco()
+    let win = false
+    let defeat = false
 
-    // let win = false
-    // let defeat = false
-
-    // while(!win && !defeat){
+    while(!win && !defeat){
     //Loop que resolve os campos, só para quando não tem nenhum campo que pode ser resolvido com lógica
-    // let condicao = true
-    // while (condicao) {
-    //     await resolverCampos()
-    //     condicao = verificaLoop()
-    //     await delay()
-    // }
-    //     calculaMelhorProbabilidade()
-    //     win = getWin()
-    //     defeat = getDefeat()
-    // }
-    // console.log("Parou")
+    let condicao = true
+    while (condicao) {
+        await resolverCampos()
+        await procuraCamposDeRisco()
+        condicao = verificaLoop()
+        await delay()
+    }
+        calculaMelhorProbabilidade()
+        win = getWin()
+        defeat = getDefeat()
+    }
+    console.log("Parou")
 }
 
 function aberturaInicial() {
@@ -98,7 +97,7 @@ async function resolverCampos() {
 
 
 //qtdBombas > 0 && (qtdBombas - qtdVizinhosMarcados) === 1 && qtdVizinhosFechadosNaoMarcados === 2
-function procuraCamposDeRisco() {
+async function procuraCamposDeRisco() {
     let campoDeRisco = listaCamposAbertos.find(campo =>
         campo.vizinhosBomba > 0
         && (campo.vizinhosBomba - campo.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length) === 1
@@ -119,22 +118,19 @@ function procuraCamposDeRisco() {
                 }
             }
         })
-        console.log("Campo de risco")
-        console.log(campoDeRisco)
-        console.log("Campo adjacente")
-        console.log(campoAdjacente)
-        campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => 
-            campoVizinho !== undefined 
-            && !campoVizinho.estaAberto 
-            && campoVizinho !== vizinhosDeRisco[0] 
-            && campoVizinho !== vizinhosDeRisco[1]).forEach(vizinho => {
-                let vizinhosMarcados = campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
-                if((campoAdjacente.vizinhosBomba - vizinhosMarcados - 1) === 0){
-                    console.log("Campo clicado")
-                    console.log(vizinho)
-                    campoClick(vizinho.posicaoX, vizinho.posicaoY)
-                }
-            })
+        if(campoAdjacente){
+            campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => 
+                campoVizinho !== undefined 
+                && !campoVizinho.estaAberto 
+                && campoVizinho !== vizinhosDeRisco[0] 
+                && campoVizinho !== vizinhosDeRisco[1]).forEach(vizinho => {
+                    let vizinhosMarcados = campoAdjacente.vizinho.flatMap(vizinho => vizinho).filter(campoVizinho => campoVizinho !== undefined && campoVizinho.estaMarcado).length
+                    if((campoAdjacente.vizinhosBomba - vizinhosMarcados - 1) === 0){
+                        campoClick(vizinho.posicaoX, vizinho.posicaoY)
+                        console.log("Abriu por referencia")
+                    }
+                })
+        }
             
     }
 }
