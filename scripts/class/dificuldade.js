@@ -1,22 +1,22 @@
 export function dificuldade(i){
     const pequeno = {
         qtdColunas: 20,
-        porcBombas: 0.2
+        porcBombas: 0.1
     }
     
     const medio = {
         qtdColunas: 30,
-        porcBombas: 0.25
+        porcBombas: 0.2
     }
     
     const grande = {
         qtdColunas: 43,
-        porcBombas: 0.3
+        porcBombas: 0.25
     }
     
     const gigante = {
         qtdColunas: 56,
-        porcBombas: 0.35
+        porcBombas: 0.3
     }
     switch(i){
         case 1:
