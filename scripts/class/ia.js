@@ -181,12 +181,13 @@ function calculaMelhorProbabilidade() {
     let melhorProbabilidade = 0
 
     listaCamposParaAnalise.forEach(campo => {
-        const probabilidade = (getVizinhosFechados(campo).length / (campo.vizinhosBomba - getVizinhosMarcados(campo).length))
+        const probabilidade = (getVizinhosFechadosENaoMarcados(campo).length / (campo.vizinhosBomba - getVizinhosMarcados(campo).length))
 
         if (probabilidade > melhorProbabilidade && probabilidade >= 0 && probabilidade <= 10) {
             melhorProbabilidade = probabilidade
             campoMelhor = campo
         }
+        console.log(`Probabilidade: ${probabilidade}`)
     })
 
     let vizinhosFechadosCampoChute = getVizinhosFechadosENaoMarcados(campoMelhor)
