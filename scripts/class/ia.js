@@ -187,7 +187,6 @@ function calculaMelhorProbabilidade() {
             melhorProbabilidade = probabilidade
             campoMelhor = campo
         }
-        console.log(`Probabilidade: ${probabilidade}`)
     })
 
     let vizinhosFechadosCampoChute = getVizinhosFechadosENaoMarcados(campoMelhor)

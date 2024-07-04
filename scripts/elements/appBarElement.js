@@ -2,6 +2,7 @@ import { listaCamposLogicos } from "../class/campoLogico.js"
 import { playIA } from "../class/ia.js"
 import { restartGame } from "../gameController/gameEvents.js"
 import { dificuldadeEscolhida } from "../gameController/gameMenu.js"
+import { createFloatDiv } from "./floatDiv.js"
 
 export function createRestartButton(){
     const appBar = document.getElementById("app_bar")
@@ -21,6 +22,16 @@ export function createIaButton(){
     iaButtom.onclick = () => playIA()
     
     appBar.appendChild(iaButtom)
+}
+
+export function createHomeButton(){
+    const appBar = document.getElementById("app_bar")
+
+    const homeButton = document.createElement('button')
+    homeButton.innerText = "Página Inicial"
+    homeButton.onclick = () => createFloatDiv(1, 2)
+    
+    appBar.appendChild(homeButton)
 }
 
 export function createContFlags(){
