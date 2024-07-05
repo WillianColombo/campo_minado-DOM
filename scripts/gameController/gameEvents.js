@@ -4,6 +4,7 @@ import { adicionarVizinhos, atualizarVizinhosBomba, resetCamposElementos } from 
 import { resetContFlag } from "../elements/appBarElement.js";
 import { gerarCampos } from "../elements/campoElement.js";
 import { resetDefeat, resetWin } from "../elements/result.js";
+import { initStyleButton } from "../styles/campoStyle.js";
 import { dificuldadeEscolhida } from "./gameMenu.js"
 import { primeiroClick } from "./primeiroClick.js";
 
@@ -39,6 +40,7 @@ export function restartGame() {
     resetWin()
     resetDefeat()
     gerarCampos(dificuldadeEscolhida.qtdColunas)
+    initStyleButton()
     adicionarVizinhos()
     atualizarVizinhosBomba(listaCamposLogicos)
     resetContFlag()
