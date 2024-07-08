@@ -1,46 +1,32 @@
-// export function imageButton(campoElement, campo) {
-//     if (campo.estaAberto && !campo.temBomba) {
-//         campoElement.style.backgroundImage = `url('/assets/images/aberto_${campo.vizinhosBomba}.png')`;
-//     } else if (!campo.estaAberto && campo.estaMarcado) {
-//         campoElement.style.backgroundImage = "url('/assets/images/bandeira.png')";
-//     } else if (!campo.estaAberto && !campo.estaMarcado) {
-//         campoElement.style.backgroundImage = "url('/assets/images/fechado.png')";
-//     } else if (campo.estaAberto && campo.temBomba) {
-//         campoElement.style.backgroundImage = "url('/assets/images/bomba_0.png')";
-//     } 
-// }
-
-// export function imageButtonDefeat(campoElement, campo){
-//     if(!campo.estaAberto && campo.temBomba){
-//         campoElement.style.backgroundImage = "url('/assets/images/bomba_1.png')";
-//     } else if(!campo.estaAberto && !campo.temBomba) {
-//         campoElement.style.backgroundImage = `url('/assets/images/aberto_${campo.vizinhosBomba}.png')`;
-//     }
-// }
+import { themes } from "../elements/changeTheme.js";
 
 export function initStyleButton(){
     const buttons = document.querySelectorAll('.botao')
     buttons.forEach(button => {
-        button.style.backgroundImage = "url('/estilo_botoes/green_theme/fechado.jpg')"
+        button.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/fechado.jpg')`
     });
 }
 
 export function imageButton(campoElement, campo) {
     if (campo.estaAberto && !campo.temBomba) {
-        campoElement.style.backgroundImage = `url('/estilo_botoes/green_theme/aberto_${campo.vizinhosBomba}.jpg`;
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/aberto_${campo.vizinhosBomba}.jpg`;
     } else if (!campo.estaAberto && campo.estaMarcado) {
-        campoElement.style.backgroundImage = "url('/estilo_botoes/green_theme/bandeira.jpg')";
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/bandeira.jpg')`;
     } else if (!campo.estaAberto && !campo.estaMarcado) {
-        campoElement.style.backgroundImage = "url('/estilo_botoes/green_theme/fechado.jpg')";
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/fechado.jpg')`;
     } else if (campo.estaAberto && campo.temBomba) {
-        campoElement.style.backgroundImage = "url('/estilo_botoes/green_theme/bomba_0.jpg')";
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/bomba_0.jpg')`;
     } 
 }
 
 export function imageButtonDefeat(campoElement, campo){
     if(!campo.estaAberto && campo.temBomba){
-        campoElement.style.backgroundImage = "url('/estilo_botoes/green_theme/bomba_1.jpg')";
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/bomba_1.jpg')`;
     } else if(!campo.estaAberto && !campo.temBomba) {
-        campoElement.style.backgroundImage = `url('/estilo_botoes/green_theme/aberto_${campo.vizinhosBomba}.jpg')`;
+        campoElement.style.backgroundImage = `url('/estilo_botoes/${getTheme()}_theme/aberto_${campo.vizinhosBomba}.jpg')`;
     }
+}
+
+function getTheme(){
+    return themes.find(theme => theme.select).name
 }

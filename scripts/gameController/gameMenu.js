@@ -1,4 +1,5 @@
 import { dificuldade } from "../class/dificuldade.js"
+import { buttonThemeInit, createChangeTheme } from "../elements/changeTheme.js"
 import { gameMenuSize } from "../styles/gameMenuSize.js"
 import { initGame } from "./gameInit.js"
 
@@ -56,9 +57,10 @@ export function buildMenu() {
     img.src = '/assets/logo/logo-nome.png'
 
     //Importa os elementos na tela
-    divOpcoes.append(img, buttonStart, divDificuldade)
+    divOpcoes.append(img, buttonStart, divDificuldade, createChangeTheme())
     divBody.appendChild(divOpcoes)
     body.appendChild(divBody)
+    buttonThemeInit()
 
 
 
