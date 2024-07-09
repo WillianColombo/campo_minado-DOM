@@ -1,4 +1,4 @@
-import { campoAberto, campoDesmarcado, campoMarcado } from "../elements/ctrlElements.js";
+import { campoAberto, campoDesmarcado, campoDesmarcadoRisco, campoMarcado, campoMarcadoRisco } from "../elements/ctrlElements.js";
 import { gameOver } from "../elements/result.js";
 import { checkWin } from "./tabuleiro.js";
 
@@ -10,13 +10,14 @@ export function resetListaCamposLogicos() {
 }
 
 //Gera o campo lógico referente ao campo da tela
-export function gerarCamposLogico(posicaoX, posicaoY, temBomba, estaMarcado, estaAberto) {
+export function gerarCamposLogico(posicaoX, posicaoY, temBomba, estaMarcado, estaAberto, estaMarcadoRisco) {
     let campoLogico = {
         posicaoX: posicaoX,
         posicaoY: posicaoY,
         temBomba: temBomba,
         estaMarcado: estaMarcado,
-        estaAberto: estaAberto
+        estaAberto: estaAberto,
+        estaMarcadoRisco: estaMarcadoRisco
     }
     
     listaCamposLogicos.push(campoLogico)
@@ -38,7 +39,7 @@ export function abrirCampo(posicaoX, posicaoY) {
     while (fila.length > 0) {
         const campo = fila.shift(); // Remove o primeiro campo da fila
 
-        if (!campo.estaMarcado && !campo.estaAberto) { //Verifica se o campo não está marcado e aberto
+        if (!campo.estaMarcado && !campo.estaAberto && !campo.estaMarcadoRisco) { //Verifica se o campo não está marcado e aberto
             if (!campo.temBomba) {
                 campo.estaAberto = true; // Abre logicamente o campo
                 campoAberto(campo); // Abre visualmente o campo
@@ -71,7 +72,19 @@ export function marcarCampo(posicaoX, posicaoY) {
         campoMarcado(campo)
     } else {
         campo.estaMarcado = false
+        campo.estaMarcadoRisco = false
         campoDesmarcado(campo)
+    }
+}
+
+export function marcarCampoRisco(posicaoX, posicaoY) {
+    const campo = acharCampo(posicaoX, posicaoY)
+    if (!campo.estaMarcado && campo.estaMarcadoRisco === false) {
+        campo.estaMarcadoRisco = true
+        campoMarcadoRisco(campo)
+    } else {
+        campo.estaMarcadoRisco = false
+        campoDesmarcadoRisco(campo)
     }
 }
 

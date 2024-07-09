@@ -21,6 +21,16 @@ export function campoAberto(campo, defeat = false){
     }
 }
 
+export function campoMarcadoRisco(campo){
+    const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
+    imageButton(campoElement, campo)
+}
+
+export function campoDesmarcadoRisco(campo){
+    const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
+    imageButton(campoElement, campo)
+}
+
 export function campoMarcado(campo){
     const campoElement = document.getElementById(`${campo.posicaoX}-${campo.posicaoY}`)
     imageButton(campoElement, campo)

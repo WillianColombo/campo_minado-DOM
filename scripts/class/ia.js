@@ -106,7 +106,8 @@ async function resolverCampos() {
     //Marca os campos que é certo a presença de bomba
     camposComBomba.forEach(campo => {
         if (!listaCamposMarcados.includes(campo)) {
-            onRightClick(campo.posicaoX, campo.posicaoY)
+            const ev = false
+            onRightClick(ev, campo.posicaoX, campo.posicaoY)
         }
     })
 

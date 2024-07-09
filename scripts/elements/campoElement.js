@@ -11,10 +11,9 @@ export function gerarCampos(qtdColunas) {
             button.className = 'botao'
             button.id = `${j + 1}-${i + 1}`
             button.onclick = () => campoClick(j + 1, i + 1);
-            button.oncontextmenu = () => onRightClick(j + 1, i + 1)
+            button.oncontextmenu = (ev) => onRightClick(ev, j + 1, i + 1)
             tabuleiro.appendChild(button)
-            gerarCamposLogico(j + 1, i + 1, false, false, false)
-            
+            gerarCamposLogico(j + 1, i + 1, false, false, false, false)
         }
     }
     styleButton(qtdColunas)

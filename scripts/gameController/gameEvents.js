@@ -1,4 +1,4 @@
-import { abrirCampo, listaCamposLogicos, marcarCampo, resetListaCamposLogicos } from "../class/campoLogico.js"
+import { abrirCampo, acharCampo, listaCamposLogicos, marcarCampo, marcarCampoRisco, resetListaCamposLogicos } from "../class/campoLogico.js"
 import { resetListasIA } from "../class/ia.js";
 import { adicionarVizinhos, atualizarVizinhosBomba, resetCamposElementos } from "../class/tabuleiro.js"
 import { resetContFlag } from "../elements/appBarElement.js";
@@ -28,8 +28,12 @@ document.querySelector("body").addEventListener("contextmenu", function (ev) {
 })
 
 
-export function onRightClick(posicaoX, posicaoY) {
-    marcarCampo(posicaoX, posicaoY)
+export function onRightClick(ev, posicaoX, posicaoY) {
+    if (ev.shiftKey) {
+        marcarCampoRisco(posicaoX, posicaoY)
+    } else if(ev){
+        marcarCampo(posicaoX, posicaoY) 
+    }
 }
 
 export function restartGame() {

@@ -24,8 +24,27 @@ const green = {
     borderColorLigth: '#33dc8a'
 }
 
-campoFechado()
+campoMarcadoRisco()
 
+
+function campoMarcadoRisco() {
+    campo.style.padding = 0
+    campo.style.paddingBottom = '02%'
+    campo.style.backgroundColor = dark.backgroundColor
+    campo.style.borderTop = `${borderSizeFechado(campo)} solid ${dark.borderColorLigth}`
+    campo.style.borderLeft = `${borderSizeFechado(campo)} solid ${dark.borderColorLigth}`
+    campo.style.borderBottom = `${borderSizeFechado(campo)} solid ${dark.borderColor}`
+    campo.style.borderRight = `${borderSizeFechado(campo)} solid ${dark.borderColor}`
+
+    campo.innerText = "?"
+    campo.style.color = '#fdd631'
+    //campo.style.color = '#e8b13f'
+    campo.style.fontFamily = "'Silkscreen', sans-serif"
+    campo.style.display = 'flex'
+    campo.style.justifyContent = 'center'
+    campo.style.alignItems = 'center'
+    campo.style.fontSize = `${campo.offsetHeight * 0.9}px`
+}
 
 function campoFechado() {
     campo.style.padding = 0
