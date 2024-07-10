@@ -2,7 +2,7 @@ import { listaCamposLogicos } from "../class/campoLogico.js"
 import { playIA } from "../class/ia.js"
 import { restartGame } from "../gameController/gameEvents.js"
 import { dificuldadeEscolhida } from "../gameController/gameMenu.js"
-import { buttonThemeInit, createChangeTheme } from "./changeTheme.js"
+import { createChangeTheme } from "./changeTheme.js"
 import { createFloatDiv } from "./floatDiv.js"
 
 export function createAppBar() {
@@ -11,7 +11,6 @@ export function createAppBar() {
     createHomeButton()
     createContFlags()
     document.getElementById("app_bar").append(createChangeTheme())
-    buttonThemeInit()
 }
 
 export function createRestartButton() {

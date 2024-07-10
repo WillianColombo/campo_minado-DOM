@@ -1,11 +1,13 @@
 import { dificuldade } from "../class/dificuldade.js"
-import { buttonThemeInit, createChangeTheme } from "../elements/changeTheme.js"
+import { createChangeTheme } from "../elements/changeTheme.js"
 import { gameMenuSize } from "../styles/gameMenuSize.js"
 import { initGame } from "./gameInit.js"
 
-buildMenu()
-
 export let dificuldadeEscolhida = dificuldade(2)
+
+let listaDificuldade = []
+
+buildMenu()
 
 export function buildMenu() {
     const body = document.querySelector('body')
@@ -22,7 +24,38 @@ export function buildMenu() {
     buttonStart.onclick = () => iniciarGame()
 
 
+    const img = document.createElement('img')
+    img.id = 'img-logo'
+    img.src = '/assets/logo/logo-nome.png'
 
+    //Importa os elementos na tela
+    divOpcoes.append(img, buttonStart, createDivDificuldade(), createChangeTheme())
+    divBody.appendChild(divOpcoes)
+    body.appendChild(divBody)
+
+
+
+    //Dificuldade escolhida, exportada para resetar dentro de game com as mesmas configurações. Inicia por padrão nessa escolha
+
+    //Função chamada ao clicar no botão "Iniciar Jogo"
+    function iniciarGame() {
+        body.innerHTML = '' //Limpa a tela de menu
+        initGame(dificuldadeEscolhida.qtdColunas, dificuldadeEscolhida.porcBombas) //Gera o jogo
+    }
+
+    gameMenuSize()
+}
+
+//Replica um input radio em forma de botões
+function mudarDificuldade(button) {
+    const oldButton = listaDificuldade.find(buttonLista => buttonLista.disabled === true)
+    oldButton.disabled = false
+    button.disabled = true
+
+    dificuldadeEscolhida = dificuldade(parseInt(button.id))
+}
+
+function createDivDificuldade() {
     const divDificuldade = document.createElement('div')
     divDificuldade.id = 'div-dificuldade'
 
@@ -50,36 +83,7 @@ export function buildMenu() {
     button4.onclick = () => mudarDificuldade(button4)
 
     divDificuldade.append(button1, button2, button3, button4)
-    const listaDificuldade = [button1, button2, button3, button4]
+    listaDificuldade = [button1, button2, button3, button4]
 
-    const img = document.createElement('img')
-    img.id = 'img-logo'
-    img.src = '/assets/logo/logo-nome.png'
-
-    //Importa os elementos na tela
-    divOpcoes.append(img, buttonStart, divDificuldade, createChangeTheme())
-    divBody.appendChild(divOpcoes)
-    body.appendChild(divBody)
-    buttonThemeInit()
-
-
-
-    //Dificuldade escolhida, exportada para resetar dentro de game com as mesmas configurações. Inicia por padrão nessa escolha
-
-    //Função chamada ao clicar no botão "Iniciar Jogo"
-    function iniciarGame() {
-        body.innerHTML = '' //Limpa a tela de menu
-        initGame(dificuldadeEscolhida.qtdColunas, dificuldadeEscolhida.porcBombas) //Gera o jogo
-    }
-
-    //Replica um input radio em forma de botões
-    function mudarDificuldade(button) {
-        const oldButton = listaDificuldade.find(buttonLista => buttonLista.disabled === true)
-        oldButton.disabled = false
-        button.disabled = true
-
-        dificuldadeEscolhida = dificuldade(parseInt(button.id))
-    }
-
-    gameMenuSize()
+    return divDificuldade
 }

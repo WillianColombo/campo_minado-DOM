@@ -9,42 +9,57 @@ export let themes = [
 ]
 
 export function createChangeTheme() {
-    const div = document.createElement('div')
-    const buttonBrown = document.createElement('button')
-    const buttonDark = document.createElement('button')
-    const buttonLigth = document.createElement('button')
-    const buttonGreen = document.createElement('button')
+    const themeDiv = document.createElement('div')
+    themeDiv.id = 'theme-div'
 
-    buttonBrown.id = 'brown'
-    buttonDark.id = 'dark'
-    buttonLigth.id = 'ligth'
-    buttonGreen.id = 'green'
+    const themeButton = document.createElement('button')
+    themeButton.id = 'theme-button'
+    themeButton.onclick = () => {
+        const buttonDiv = document.getElementById('container-theme-div')
+        if (buttonDiv) {
+            buttonDiv.remove()
+        } else {
+            themeDiv.appendChild(openContainerTheme())
+            document.getElementById(themes.find(theme => theme.select).name).disabled = true
+        }
+    }
 
-    buttonBrown.className = 'button-theme'
-    buttonDark.className = 'button-theme'
-    buttonLigth.className = 'button-theme'
-    buttonGreen.className = 'button-theme'
+    themeDiv.appendChild(themeButton)
 
-    buttonBrown.innerText = 'Marrom'
-    buttonDark.innerText = 'Escuro'
-    buttonLigth.innerText = 'Claro'
-    buttonGreen.innerText = 'Verde'
-
-    buttonBrown.onclick = () => changeTheme(buttonBrown)
-    buttonDark.onclick = () => changeTheme(buttonDark)
-    buttonLigth.onclick = () => changeTheme(buttonLigth)
-    buttonGreen.onclick = () => changeTheme(buttonGreen)
-
-    div.append(buttonBrown, buttonDark, buttonLigth, buttonGreen)
-    
-    return div
+    return themeDiv
 }
 
-export function buttonThemeInit(){
-    document.getElementById(themes.find(theme => theme.select).name).disabled = true
+function openContainerTheme() {
+    const brownButton = document.createElement('button')
+    const darkButton = document.createElement('button')
+    const ligthButton = document.createElement('button')
+    const greenButton = document.createElement('button')
+
+    brownButton.id = 'brown'
+    darkButton.id = 'dark'
+    ligthButton.id = 'ligth'
+    greenButton.id = 'green'
+
+    brownButton.className = 'theme-button'
+    darkButton.className = 'theme-button'
+    ligthButton.className = 'theme-button'
+    greenButton.className = 'theme-button'
+
+    brownButton.onclick = () => changeTheme(brownButton)
+    darkButton.onclick = () => changeTheme(darkButton)
+    ligthButton.onclick = () => changeTheme(ligthButton)
+    greenButton.onclick = () => changeTheme(greenButton)
+
+
+    const buttonDiv = document.createElement('div')
+    buttonDiv.id = 'container-theme-div'
+
+    buttonDiv.append(brownButton, darkButton, ligthButton, greenButton)
+
+    return buttonDiv
 }
 
-function changeTheme(newTheme){
+function changeTheme(newTheme) {
     document.getElementById(themes.find(theme => theme.select).name).disabled = false
     themes.find(theme => theme.select).select = false
     newTheme.disabled = true
