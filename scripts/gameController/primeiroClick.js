@@ -1,7 +1,7 @@
 import { acharCampo, listaCamposLogicos } from "../class/campoLogico.js"
 import { atualizarVizinhosBomba, gerarBombas } from "../class/tabuleiro.js"
 import { campoAberto } from "../elements/ctrlElements.js"
-import { dificuldadeEscolhida } from "./gameMenu.js"
+import { checkDifficulty } from "../elements/changeDifficulty.js"
 
 export function primeiroClick(posicaoX, posicaoY) {
     const campoInicial = acharCampo(posicaoX, posicaoY) //Campo que foi iniciado
@@ -23,7 +23,7 @@ export function primeiroClick(posicaoX, posicaoY) {
             campoAberto(campo, false, true);
         }
 
-        gerarBombas(dificuldadeEscolhida.porcBombas) //Gera as bombas no tabuleiro após a abertura inicial
+        gerarBombas(checkDifficulty().porcBombas) //Gera as bombas no tabuleiro após a abertura inicial
         atualizarVizinhosBomba(listaCamposLogicos) //Atualiza a contagem de bombas nos vizinhos
 
         //Verifica e abre sequencialmente os campos perto dos iniciais

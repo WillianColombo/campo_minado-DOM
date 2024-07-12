@@ -1,11 +1,8 @@
-import { dificuldade } from "../class/dificuldade.js"
+import { checkDifficulty, createChangeDifficulty } from "../elements/changeDifficulty.js"
 import { createChangeTheme } from "../elements/changeTheme.js"
-import { gameMenuSize } from "../styles/gameMenuSize.js"
+import { createGitHubLink, createSignature } from "../elements/signature.js"
+import { menuTheme } from "../styles/menuTheme.js"
 import { initGame } from "./gameInit.js"
-
-export let dificuldadeEscolhida = dificuldade(2)
-
-let listaDificuldade = []
 
 buildMenu()
 
@@ -23,14 +20,20 @@ export function buildMenu() {
     buttonStart.innerText = 'Iniciar Jogo'
     buttonStart.onclick = () => iniciarGame()
 
-
-    const img = document.createElement('img')
-    img.id = 'img-logo'
-    img.src = '/assets/logo/logo-nome.png'
+    const divLogo = document.createElement('div')
+    divLogo.id = 'logo-div'
+    const divName = document.createElement('div')
+    divName.id = 'name-div'
+    divName.innerText = 'CONDOMINE'
+    const divSlogan = document.createElement('div')
+    divSlogan.id = 'slogan-div'
+    divSlogan.innerText = "Your George's game"
+    const hr = document.createElement('hr')
+    divLogo.append(divName, hr, divSlogan)
 
     //Importa os elementos na tela
-    divOpcoes.append(img, buttonStart, createDivDificuldade(), createChangeTheme())
-    divBody.appendChild(divOpcoes)
+    divOpcoes.append(divLogo, buttonStart)
+    divBody.append(topDivMenu(), divOpcoes, bottomDivMenu())
     body.appendChild(divBody)
 
 
@@ -40,50 +43,35 @@ export function buildMenu() {
     //Função chamada ao clicar no botão "Iniciar Jogo"
     function iniciarGame() {
         body.innerHTML = '' //Limpa a tela de menu
-        initGame(dificuldadeEscolhida.qtdColunas, dificuldadeEscolhida.porcBombas) //Gera o jogo
+        initGame(checkDifficulty().qtdColunas, checkDifficulty().porcBombas) //Gera o jogo
     }
 
-    gameMenuSize()
+    randomBackground(3)
+    menuTheme()
 }
 
-//Replica um input radio em forma de botões
-function mudarDificuldade(button) {
-    const oldButton = listaDificuldade.find(buttonLista => buttonLista.disabled === true)
-    oldButton.disabled = false
-    button.disabled = true
-
-    dificuldadeEscolhida = dificuldade(parseInt(button.id))
+//Escolhe aleatoriamente o background do menu
+function randomBackground(max){
+    const divBody = document.getElementById('div-body')
+    divBody.style.backgroundImage = `url('/assets/background/${Math.floor(Math.random() * max + 1)}.jpeg')`;
 }
 
-function createDivDificuldade() {
-    const divDificuldade = document.createElement('div')
-    divDificuldade.id = 'div-dificuldade'
+//Gera a div superior para opções
+function topDivMenu(){
+    const topDiv = document.createElement('div')
+    topDiv.className = 'top-div'
 
-    const button1 = document.createElement('button')
-    const button2 = document.createElement('button')
-    const button3 = document.createElement('button')
-    const button4 = document.createElement('button')
+    topDiv.append(createChangeDifficulty(), createChangeTheme())
 
-    button1.id = '1'
-    button2.id = '2'
-    button3.id = '3'
-    button4.id = '4'
-
-    button1.disabled = true
-
-    button1.innerText = 'Pequeno'
-    button2.innerText = 'Médio'
-    button3.innerText = 'Grande'
-    button4.innerText = 'Gigante'
-
-
-    button1.onclick = () => mudarDificuldade(button1)
-    button2.onclick = () => mudarDificuldade(button2)
-    button3.onclick = () => mudarDificuldade(button3)
-    button4.onclick = () => mudarDificuldade(button4)
-
-    divDificuldade.append(button1, button2, button3, button4)
-    listaDificuldade = [button1, button2, button3, button4]
-
-    return divDificuldade
+    return topDiv
 }
+
+function bottomDivMenu(){
+    const bottomDiv = document.createElement('div')
+    bottomDiv.className = 'bottom-div'
+
+    bottomDiv.append(createSignature(), createGitHubLink())
+
+    return bottomDiv
+}
+

@@ -1,0 +1,47 @@
+#difficulty-button{
+    margin: 2vh 2vh 0 2vh;
+    width: auto;
+    height: 5vh;
+    font-size: 2.5vh;
+}
+
+.difficulty-button{
+    height: 5vh;
+    width: auto;
+
+    border-radius: 100px;
+    margin: 1vh;
+    border: solid 0.5vh;
+}
+.difficulty-button:disabled{
+    border: solid 0.5vh;
+    color: black;
+}
+
+#container-difficulty-div{
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 2vh;
+
+    border: solid 4px;
+    border-radius: 5vh;
+}
+
+#difficulty-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2vh;
+    margin-top: 2vh;
+}
+
+.option-difficulty-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-family: "Silkscreen", sans-serif;
+
+    margin: 2vh 2vh 0 2vh;
+}

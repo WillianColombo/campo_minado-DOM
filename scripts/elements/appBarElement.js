@@ -1,7 +1,7 @@
 import { listaCamposLogicos } from "../class/campoLogico.js"
 import { playIA } from "../class/ia.js"
 import { restartGame } from "../gameController/gameEvents.js"
-import { dificuldadeEscolhida } from "../gameController/gameMenu.js"
+import { checkDifficulty } from "../elements/changeDifficulty.js"
 import { createChangeTheme } from "./changeTheme.js"
 import { createFloatDiv } from "./floatDiv.js"
 
@@ -48,7 +48,7 @@ export function createContFlags() {
 
     const contFlags = document.createElement('div')
     contFlags.id = 'cont-flag'
-    contFlags.innerText = parseInt(listaCamposLogicos.length * dificuldadeEscolhida.porcBombas)
+    contFlags.innerText = parseInt(listaCamposLogicos.length * checkDifficulty().porcBombas)
 
     appBar.appendChild(contFlags)
 }
@@ -64,5 +64,5 @@ export function updateContFlag(x) {
 
 export function resetContFlag() {
     const contFlags = document.getElementById("cont-flag")
-    contFlags.innerText = parseInt(listaCamposLogicos.length * dificuldadeEscolhida.porcBombas)
+    contFlags.innerText = parseInt(listaCamposLogicos.length * checkDifficulty().porcBombas)
 }
