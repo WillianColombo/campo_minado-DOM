@@ -6,51 +6,73 @@ import { createChangeTheme } from "./changeTheme.js"
 import { createFloatDiv } from "./floatDiv.js"
 
 export function createAppBar() {
-    createRestartButton()
-    createIaButton()
-    createHomeButton()
-    createContFlags()
-    document.getElementById("app_bar").append(createChangeTheme())
+    const appBar = document.getElementById("app-bar")
+
+    const leftAppBarSection = document.createElement('section')
+    leftAppBarSection.id = 'left-appbar-section'
+    const middleAppBarSection = document.createElement('section')
+    middleAppBarSection.id = 'middle-appbar-section'
+    const rightAppBarSection = document.createElement('section')
+    rightAppBarSection.id = 'right-appbar-section'
+
+    leftAppBarSection.append(createHomeButton(), createRestartButton())
+    middleAppBarSection.appendChild(createContFlags())
+    rightAppBarSection.append(createIaButton(), createChangeTheme())
+
+    appBar.append(leftAppBarSection, middleAppBarSection, rightAppBarSection)
+
+    document.getElementById('theme-button').className = 'appbar-elements'
+    document.getElementById('theme-button').id = 'theme-button-appbar'
+    
 }
 
-export function createRestartButton() {
-    const appBar = document.getElementById("app_bar")
-
+function createRestartButton() {
     const restartButtom = document.createElement('button')
     restartButtom.innerText = "Reiniciar"
+    restartButtom.className = 'appbar-elements'
     restartButtom.onclick = () => restartGame()
 
-    appBar.appendChild(restartButtom)
+    return restartButtom
 }
 
-export function createIaButton() {
-    const appBar = document.getElementById("app_bar")
-
+function createIaButton() {
     const iaButtom = document.createElement('button')
     iaButtom.innerText = "IA"
+    iaButtom.className = 'appbar-elements'
     iaButtom.onclick = () => playIA()
 
-    appBar.appendChild(iaButtom)
+    return iaButtom
 }
 
-export function createHomeButton() {
-    const appBar = document.getElementById("app_bar")
-
+function createHomeButton() {
     const homeButton = document.createElement('button')
     homeButton.innerText = "Página Inicial"
+    homeButton.className = 'appbar-elements'
     homeButton.onclick = () => createFloatDiv(1, 2)
 
-    appBar.appendChild(homeButton)
+    return homeButton
 }
 
-export function createContFlags() {
-    const appBar = document.getElementById("app_bar")
-
+function createContFlags() {
     const contFlags = document.createElement('div')
-    contFlags.id = 'cont-flag'
-    contFlags.innerText = parseInt(listaCamposLogicos.length * checkDifficulty().porcBombas)
 
-    appBar.appendChild(contFlags)
+    const img = document.createElement('img')
+    img.src = '/estilo_botoes/bandeira.png'
+    img.id = 'flag'
+    
+    const div = document.createElement('div')
+    div.appendChild(img)
+    
+    
+    const span = document.createElement('span')
+    span.id = 'cont'
+    span.innerText = parseInt(listaCamposLogicos.length * checkDifficulty().porcBombas)
+    
+    contFlags.id = 'cont-flag'
+    contFlags.className = 'appbar-elements'
+    contFlags.append(div, span)
+
+    return contFlags
 }
 
 export function updateContFlag(x) {

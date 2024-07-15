@@ -1,19 +1,6 @@
-#app_bar {
-    background-color: red;
-    border-radius: 10px;
-    margin: auto;
-}
-
-#tabuleiro {
-    background-color: #393437;
-    /*background-color: #B85639;*/
-    border-radius: 10px;
-    margin: auto;
-    display: grid;
-}
-
 body {
     margin: 0;
+    padding: 0;
 }
 
 #float-div {

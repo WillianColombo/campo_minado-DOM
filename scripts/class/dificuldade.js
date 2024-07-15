@@ -10,12 +10,12 @@ export function dificuldade(i){
     }
     
     const grande = {
-        qtdColunas: 43,
+        qtdColunas: 40,
         porcBombas: 0.25
     }
     
     const gigante = {
-        qtdColunas: 56,
+        qtdColunas: 50,
         porcBombas: 0.3
     }
     switch(i){

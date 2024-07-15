@@ -1,6 +1,5 @@
 import { gerarCamposLogico } from "/scripts/class/campoLogico.js"
 import { campoClick, onRightClick } from "../gameController/gameEvents.js"
-import { getAlturaTabuleiro, getLarguraTabuleiro } from "./size.js"
 
 //Cria os botões em uma grid
 export function gerarCampos(qtdColunas) {
@@ -23,13 +22,15 @@ export function gerarCampos(qtdColunas) {
 
 //Calcula a largura dos botões a partir da largura do tabuleiro e a quantidade pré estabelecida de colunas
 function larguraButton(qtdColunas) {
-    const larguraButton = getLarguraTabuleiro() / qtdColunas
+    const widthBoard = document.getElementById('tabuleiro').offsetWidth
+    const larguraButton = widthBoard / qtdColunas
     return larguraButton
 }
 
 //Calcula a quantidade de linhas a partir da altura do tabuleiro e largura dos botões já calculados
 function qtdLinhas(qtdColunas) {
-    const qtdLinhas = parseInt(getAlturaTabuleiro() / larguraButton(qtdColunas))
+    const heightBoard = document.getElementById('tabuleiro').offsetHeight
+    const qtdLinhas = parseInt(heightBoard / larguraButton(qtdColunas))
     return qtdLinhas
 }
 

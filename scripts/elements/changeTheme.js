@@ -1,6 +1,6 @@
 import { acharCampo } from "../class/campoLogico.js"
 import { imageButton } from "../styles/campoStyle.js"
-import { containerThemeTheme } from "../styles/menuTheme.js"
+import { containerThemeTheme, menuTheme } from "../styles/menuTheme.js"
 
 export let themes = [
     {
@@ -141,4 +141,7 @@ function changeTheme(newTheme) {
 
         imageButton(button, campo)
     })
+    if(document.getElementById('div-body')){
+        menuTheme()
+    }
 }

@@ -1,4 +1,4 @@
-import { containerDifficultyTheme } from "../styles/menuTheme.js"
+import { containerDifficultyTheme, containerThemeTheme, menuTheme } from "../styles/menuTheme.js"
 
 let difficultys = [
     { name: "small", select: true, qtdColunas: 20, porcBombas: 0.1},

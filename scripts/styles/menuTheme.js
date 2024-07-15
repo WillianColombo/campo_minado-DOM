@@ -1,37 +1,51 @@
 import { checkTheme } from "../elements/changeTheme.js"
 
 export function menuTheme() {
-    const difficultyButton = document.getElementById('difficulty-button')
-    difficultyButton.style.backgroundColor = checkTheme().backgroundColor
-    difficultyButton.style.borderColor = checkTheme().borderColor
-    if(checkTheme().name === 'light'){
-        difficultyButton.style.color = 'black'
-    } else difficultyButton.style.color = 'white'
 
-    const themeButton = document.getElementById('theme-button')
-    themeButton.style.backgroundColor = checkTheme().backgroundColor
-    themeButton.style.borderColor = checkTheme().borderColor
-    if(checkTheme().name === 'light'){
-        themeButton.style.color = 'black'
-    } else themeButton.style.color = 'white'
+    const listButtonStyles = [
+        document.getElementById('difficulty-button'),
+        document.getElementById('theme-button'),
+        document.getElementById('button-start'),
+        document.getElementById('container-theme-div'),
+        document.getElementById('container-difficulty-div'),
+    ]
 
-    const startButton = document.getElementById('button-start')
-    startButton.style.backgroundColor = checkTheme().backgroundColor
-    startButton.style.borderColor = checkTheme().borderColor
-    if(checkTheme().name === 'light'){
-        startButton.style.color = 'black'
-    } else startButton.style.color = 'white'
+    listButtonStyles.forEach(element => {
+        if (element) {
+            if (element.id === 'container-difficulty-div' || element.id === 'container-theme-div') {
+                element.style.backgroundColor = checkTheme().borderColorLigth
+                element.style.borderTopColor = checkTheme().backgroundColor
+                element.style.borderLeftColor = checkTheme().backgroundColor
+                element.style.borderBottomColor = checkTheme().borderColor
+                element.style.borderRightColor = checkTheme().borderColor
+                if(element.id === 'container-difficulty-div'){
+                    difficultyButtonsTheme()
+                }
+            } else {
+                element.style.backgroundColor = checkTheme().backgroundColor
+                element.style.borderTopColor = checkTheme().borderColorLigth
+                element.style.borderLeftColor = checkTheme().borderColorLigth
+                element.style.borderBottomColor = checkTheme().borderColor
+                element.style.borderRightColor = checkTheme().borderColor
+            }
+            if (checkTheme().name === 'light') {
+                element.style.color = 'black'
+            } else element.style.color = 'white'
+        }
+    })
 }
 
 export function containerDifficultyTheme() {
     const containerDifficulty = document.getElementById('container-difficulty-div')
     containerDifficulty.style.backgroundColor = checkTheme().borderColorLigth
-    containerDifficulty.style.borderColor = checkTheme().borderColor
-    
-    document.querySelectorAll('.difficulty-button').forEach(button => button.style.backgroundColor = checkTheme().backgroundColor)
-    document.querySelectorAll('.difficulty-button').forEach(button => button.style.borderColor = checkTheme().borderColor)
+    containerDifficulty.style.borderTopColor = checkTheme().backgroundColor
+    containerDifficulty.style.borderLeftColor = checkTheme().backgroundColor
+    containerDifficulty.style.borderBottomColor = checkTheme().borderColor
+    containerDifficulty.style.borderRightColor = checkTheme().borderColor
 
-    if(checkTheme().name === 'light'){
+    difficultyButtonsTheme()
+
+    if (checkTheme().name === 'light') {
         containerDifficulty.style.color = 'black'
         document.querySelectorAll('.difficulty-button').forEach(button => button.style.color = 'black')
     } else {
@@ -40,14 +54,28 @@ export function containerDifficultyTheme() {
     }
 }
 
+function difficultyButtonsTheme(){
+    document.querySelectorAll('.difficulty-button').forEach(button => {
+        button.style.backgroundColor = checkTheme().backgroundColor
+        button.style.borderTopColor = checkTheme().borderColorLigth
+        button.style.borderLeftColor = checkTheme().borderColorLigth
+        button.style.borderBottomColor = checkTheme().borderColor
+        button.style.borderRightColor = checkTheme().borderColor
+        if (checkTheme().name === 'light') {
+            button.style.color = 'black'
+        } else button.style.color = 'white'
+    })
+    
+}
+
 export function containerThemeTheme() {
     const containerTheme = document.getElementById('container-theme-div')
     containerTheme.style.backgroundColor = checkTheme().borderColorLigth
-    containerTheme.style.borderColor = checkTheme().borderColor
-
-    if(checkTheme().name === 'light'){
+    containerTheme.style.borderTopColor = checkTheme().borderColor
+    containerTheme.style.borderLeftColor = checkTheme().borderColor
+    containerTheme.style.borderBottomColor = checkTheme().backgroundColor
+    containerTheme.style.borderRightColor = checkTheme().backgroundColor
+    if (checkTheme().name === 'light') {
         containerTheme.style.color = 'black'
-    } else {
-        containerTheme.style.color = 'white'
-    }
+    } else containerTheme.style.color = 'white'
 }

@@ -1,10 +1,13 @@
-export function createDivs(){
-    const body = document.querySelector("body")
-
+export function createAppbarDiv(){
     const appBar = document.createElement('div')
-    appBar.id = "app_bar"
-    const tabuleiro = document.createElement("div")
-    tabuleiro.id = "tabuleiro"
+    appBar.id = "app-bar"
 
-    body.append(appBar, tabuleiro)
+    return appBar
+}
+
+export function createBoardDiv(){
+    const board = document.createElement("div")
+    board.id = "tabuleiro"
+
+    return board
 }

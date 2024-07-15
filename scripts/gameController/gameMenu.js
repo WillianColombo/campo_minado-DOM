@@ -43,7 +43,7 @@ export function buildMenu() {
     //Função chamada ao clicar no botão "Iniciar Jogo"
     function iniciarGame() {
         body.innerHTML = '' //Limpa a tela de menu
-        initGame(checkDifficulty().qtdColunas, checkDifficulty().porcBombas) //Gera o jogo
+        initGame(checkDifficulty().qtdColunas) //Gera o jogo
     }
 
     randomBackground(3)
