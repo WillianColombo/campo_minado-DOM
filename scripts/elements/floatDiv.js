@@ -1,18 +1,32 @@
-import { restartGame } from "../gameController/gameEvents.js"
+import { resetListaCamposLogicos } from "../class/campoLogico.js"
+import { resetListasIA } from "../class/ia.js"
+import { resetCamposElementos } from "../class/tabuleiro.js"
+import { resetPrimeiroClick, restartGame } from "../gameController/gameEvents.js"
 import { buildMenu } from "../gameController/gameMenu.js"
+import { resetContFlag } from "./appBarElement.js"
+import { resetDefeat, resetWin } from "./result.js"
 
 export function createFloatDiv(conteudo = {}, option = 1) {
-    const floatDiv = document.createElement('div')
-    floatDiv.id = "float-div"
+    let floatDiv = ''
+    let overlay = ''
 
-    const overlay = document.createElement('div')
-    overlay.id = 'overlay-div'
+    if(!document.getElementById('float-div') && !document.getElementById('overlay-div')){
+        floatDiv = document.createElement('div')
+        floatDiv.id = "float-div"
+        
+        overlay = document.createElement('div')
+        overlay.id = 'overlay-div'
+    } else {
+        floatDiv = document.getElementById('float-div')
+        overlay =  document.getElementById('overlay-div')
+    }
 
     if (option === 1) {
         floatDiv.innerHTML = conteudo.title
 
         const buttonRestart = document.createElement('button')
-        buttonRestart.id = 'button-restart'
+        buttonRestart.id = 'red-button'
+        buttonRestart.className = 'button-float'
         buttonRestart.innerText = conteudo.button
         buttonRestart.onclick = () => reiniciarFlutuante(floatDiv, overlay)
 
@@ -21,8 +35,10 @@ export function createFloatDiv(conteudo = {}, option = 1) {
         const buttonOk = document.createElement('button')
         const buttonCancel = document.createElement('button')
 
-        buttonOk.id = 'button-ok'
-        buttonCancel.id = 'button-cancel'
+        buttonOk.className = 'button-float'
+        buttonCancel.className = 'button-float'
+        buttonOk.id = 'blue-button'
+        buttonCancel.id = 'red-button'
 
         buttonOk.innerText = 'Continuar'
         buttonCancel.innerText = 'Cancelar'
@@ -30,14 +46,18 @@ export function createFloatDiv(conteudo = {}, option = 1) {
         floatDiv.innerHTML = 'Se você sair, perderá o progresso da partida. Deseja continuar?'
 
         buttonOk.onclick = () => {
-            restartGame()
+            resetLists()
             const body = document.querySelector('body')
             body.innerHTML = ''
             buildMenu()
         }
         buttonCancel.onclick = () => reiniciarFlutuante(floatDiv, overlay, 2)
 
-        floatDiv.append(buttonOk, buttonCancel)
+        const optionsExit = document.createElement('div')
+        optionsExit.id = 'options-exit-float'
+        optionsExit.append(buttonOk, buttonCancel)
+        
+        floatDiv.appendChild(optionsExit)
     }
 
     abrirFlutuante(floatDiv, overlay)
@@ -48,8 +68,8 @@ export function createFloatDiv(conteudo = {}, option = 1) {
 
 //Habilita a div flutuante e faz o overlay
 function abrirFlutuante(floatDiv, overlay) {
-    floatDiv.style.display = 'block';
-    overlay.style.display = 'block';
+    floatDiv.style.display = 'flex';
+    overlay.style.display = 'flex';
 }
 
 //Desabilita a div flutuante e o overlay, reinicia o jogo
@@ -60,4 +80,14 @@ function reiniciarFlutuante(floatDiv, overlay, option = 1) {
     if (option === 1) {
         restartGame()
     }
+}
+
+function resetLists(){
+    resetListaCamposLogicos()
+    resetListasIA()
+    resetCamposElementos()
+    resetPrimeiroClick()
+    resetWin()
+    resetDefeat()
+    resetContFlag()
 }

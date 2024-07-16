@@ -3,6 +3,9 @@ body {
     padding: 0;
 }
 
+
+
+
 #float-div {
     display: none;
     position: fixed;
@@ -13,6 +16,13 @@ body {
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+
+    flex-direction: column;
+    align-items: center;
+    width: 30vw;
+    font-family: "Silkscreen", sans-serif;
+    border: solid 0.5vh;
+    border-radius: 5vh;
 }
 
 #overlay-div {
@@ -25,6 +35,52 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
+
+#options-exit-float{
+    width: 30vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.button-float{
+    margin-top: 2.5vh;
+    height: 5vh;
+    font-size: 2.5vh;
+    border-radius: 20vh;
+    color: white;
+}
+
+#blue-button{
+    background-color: #141db6;
+    border-top-color: #2839dc;
+    border-left-color: #2839dc;
+    border-bottom-color: #000190;
+    border-right-color: #000190;
+}
+#blue-button:hover{
+    background-color: #2839dc;
+    border-top-color: #141db6;
+    border-left-color: #141db6;
+    border-bottom-color: #000190;
+    border-right-color: #000190;
+}
+
+#red-button{
+    background-color: #bd2a30;
+    border-top-color: #e7534d;
+    border-left-color: #e7534d;
+    border-bottom-color: #930012;
+    border-right-color: #930012;
+}
+#red-button:hover{
+    background-color: #e7534d;
+    border-top-color: #bd2a30;
+    border-left-color: #bd2a30;
+    border-bottom-color: #930012;
+    border-right-color: #930012;
+}
+
+
 
 .botao{
     cursor: pointer;

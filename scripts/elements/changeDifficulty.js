@@ -1,8 +1,9 @@
-import { containerDifficultyTheme, containerThemeTheme, menuTheme } from "../styles/menuTheme.js"
+import { containerDifficultyTheme } from "../styles/elementsTheme.js"
+
 
 let difficultys = [
-    { name: "small", select: true, qtdColunas: 20, porcBombas: 0.1},
-    { name: "medium", select: false, qtdColunas: 30, porcBombas: 0.2},
+    { name: "small", select: true, qtdColunas: 21, porcBombas: 0.1},
+    { name: "medium", select: false, qtdColunas: 31, porcBombas: 0.2},
     { name: "big", select: false, qtdColunas: 43, porcBombas: 0.25},
     { name: "giant", select: false, qtdColunas: 56, porcBombas: 0.3}
 ]

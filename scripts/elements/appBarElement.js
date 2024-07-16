@@ -46,7 +46,7 @@ function createIaButton() {
 
 function createHomeButton() {
     const homeButton = document.createElement('button')
-    homeButton.innerText = "Página Inicial"
+    homeButton.innerText = "<--"
     homeButton.className = 'appbar-elements'
     homeButton.onclick = () => createFloatDiv(1, 2)
 
@@ -76,7 +76,7 @@ function createContFlags() {
 }
 
 export function updateContFlag(x) {
-    const contFlags = document.getElementById('cont-flag')
+    const contFlags = document.getElementById('cont')
     if (x === 1) {
         contFlags.innerText--
     } else {
@@ -85,6 +85,6 @@ export function updateContFlag(x) {
 }
 
 export function resetContFlag() {
-    const contFlags = document.getElementById("cont-flag")
+    const contFlags = document.getElementById("cont")
     contFlags.innerText = parseInt(listaCamposLogicos.length * checkDifficulty().porcBombas)
 }

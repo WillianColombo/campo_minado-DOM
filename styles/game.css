@@ -10,9 +10,8 @@
 #app-bar {
     display: flex;
     justify-content: space-between;
-    background-color: red;
     height: 7vh;
-    width: 95vw;
+    width: 100vw;
     margin: auto;
 }
 
@@ -21,9 +20,17 @@
     align-items: start;
 }
 
+/* Força o contador de flags a ficar exatamente no meio */
+#middle-appbar-section{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .appbar-elements {
-    margin: 0;
-    margin-top: 2.5vh;
+    margin: 2.5vh 2vw;
+    padding-block: 0.25vh;
+    padding-inline: 1.5vh;
     height: 5vh;
 
     font-size: 2.5vh;
@@ -31,6 +38,7 @@
 
     border: solid 0.5vh;
     border-radius: 20vh;
+    box-sizing: border-box;
 }
 
 #container-theme-div{
@@ -49,19 +57,20 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    padding: 0.23vh 1.38vh;
-
-    background-color: white;
 }
 
 
 
 /* BOARD */
 #tabuleiro {
-    background-color: #393437;
     margin: 2.5vh auto 2.5vh auto;
     display: grid;
-    width: 95vw;
+    width: 96vw;
     height: 88vh;
+}
+
+#game-div{
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
 }

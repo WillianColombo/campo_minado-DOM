@@ -51,7 +51,7 @@ export function buildMenu() {
 }
 
 //Escolhe aleatoriamente o background do menu
-function randomBackground(max){
+export function randomBackground(max){
     const divBody = document.getElementById('div-body')
     divBody.style.backgroundImage = `url('/assets/background/${Math.floor(Math.random() * max + 1)}.jpeg')`;
 }
